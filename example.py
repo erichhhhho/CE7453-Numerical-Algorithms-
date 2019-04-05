@@ -12,7 +12,7 @@ control_point_list_uniform=[]
 with open("example2.txt", "rt") as file:
     for line in file:
         data.append(list(map(int, line.strip().split(" "))))
-with open("example2_output.txt", "rt") as output:
+with open("example2_output_chord.txt", "rt") as output:
     for idx,line in enumerate(output.readlines()):
         line = line.strip('\n')
         if idx==0:
@@ -63,19 +63,19 @@ out = interpolate.splev(u,tck)
 inter_x,inter_y = np.array(interpolate.splev(unew, (knot,control_point_list.T,3)))
 inter_x_uniform,inter_y_uniform = np.array(interpolate.splev(unew, (knots_uniform,control_point_list_uniform.T,3)))
 plt.figure(figsize=(7,5))
-# plt.annotate('End point', xy=(control_point_x[0]+0.25, control_point_y[0]+0.25), xytext=(control_point_x[0]+1.25, control_point_y[0]+1.25),arrowprops=dict(facecolor='black', shrink=0.005))
-# plt.annotateZ('End point', xy=(control_point_x[-1]+0.25, control_point_y[-1]+0.25), xytext=(control_point_x[-1]+1.25, control_point_y[-1]+1.25),arrowprops=dict(facecolor='black', shrink=0.005))
-plt.title('B-Spline interpolation(Scipy & Implemented method)', fontsize=15)
+plt.annotate('Start End point1', xy=(control_point_x[0]-0.75, control_point_y[0]+0.25), xytext=(control_point_x[0]-25.25, control_point_y[0]+10.25),arrowprops=dict(facecolor='black', shrink=0.005))
+plt.annotate('Last End point2', xy=(control_point_x[-1]-0.75, control_point_y[-1]+0.25), xytext=(control_point_x[-1]-25.25, control_point_y[-1]+10.25),arrowprops=dict(facecolor='black', shrink=0.005))
+plt.title('B-Spline interpolation(Example 2 Scipy VS Implemented)', fontsize=15)
 plt.xlabel('x',horizontalalignment='center',fontsize=15)
 plt.ylabel('y', horizontalalignment='center',fontsize=15)
-# plt.plot(out[0], out[1], 'y',color='blue',label='Degree 3 Scipy method')
-plt.plot(control_point_x_uniform, control_point_y_uniform,color='red',marker= 'D',label='Control Polygon(Uniform)',markersize=3)
+plt.plot(out[0], out[1], 'y',color='black',label='Degree 3 Scipy method')
+# plt.plot(control_point_x_uniform, control_point_y_uniform,color='darkblue',marker= 'D',label='Control Polygon(Uniform)',markersize=3)
 
-plt.plot(control_point_x, control_point_y,color='darkgreen',marker= '.',linestyle='--',label='Control Polygon(Chord)',markersize=6)
+# plt.plot(control_point_x, control_point_y,color='darkgreen',marker= '.',linestyle='-',label='Control Polygon(Chord)',markersize=8)
 plt.plot(inter_x,inter_y,linestyle='--',color='limegreen',label='Degree 3 B-Spline Curve(Chord)')
-plt.plot(inter_x_uniform,inter_y_uniform,color='red',linestyle='--',label='Degree 3 B-Spline Curve(Uniform)')
+plt.plot(inter_x_uniform,inter_y_uniform,color='blue',linestyle='--',label='Degree 3 B-Spline Curve(Uniform)')
 plt.plot(x,y,'ko',label='Data Points',markersize=4)
-plt.legend( bbox_to_anchor=(1.2, 0.3))
+plt.legend(loc=4)
 plt.tight_layout()
-# plt.savefig('Comparison.png')
-plt.show()
+plt.savefig('example2_scipy.png')
+# plt.show()

@@ -12,7 +12,7 @@ def basis(t_list,u_list):
         idx_i=i+1
         for j in range(n+3):
             N[idx_i][j]=compute(u_list[j:j+5],t_list[i])
-            print(N[idx_i][j])
+            # print(N[idx_i][j])
         # print(idx_i)
     '''Endpoints condition'''
     for i in range(2):
@@ -60,28 +60,26 @@ def endpoint_conditions(u,t):
     if u_3 <= t and t <= u_4 and (t != u_3 or t != u_4):
         value = (6*(u_4 - t)) / ((u_4 - u_3) * (u_4 - u_2) * (u_4 - u_1))
         count+=1
-        print('con4!value={}'.format(value))
+        print('con4!input ={} range=[{},{}] value={}'.format(t,u_3,u_4,value))
     elif u_2 <= t and u_3 >= t and (t != u_2 or t != u_3):
         value = ((6*t-4*u_3-2*u_0) / ((u_3 - u_2) * (u_3 - u_1) * (u_3 - u_0))) + ((
-                    6*t-2*u_1-2*u_3-2*u_4) / ((u_3 - u_2) * (u_4 - u_1) * (u_3 - u_1)))
-        +((6*t-4*u_4-2*u_2) / ((u_3 - u_2) * (u_4 - u_2) * (u_4 - u_1)))
+                    6*t-2*u_1-2*u_3-2*u_4) / ((u_3 - u_2) * (u_4 - u_1) * (u_3 - u_1))) +((6*t-4*u_4-2*u_2) / ((u_3 - u_2) * (u_4 - u_2) * (u_4 - u_1)))
         count+=1
-        print('con3!value={}'.format(value))
+        print('con3!input ={} range=[{},{}] value={}'.format(t,u_2,u_3,value))
 
     elif u_1 <= t and u_2 >=t and (t != u_1 or t != u_2):
-        value = ((2*u_2-6*t+4*u_0) / ((u_2 - u_1) * (u_3 - u_0) * (u_2 - u_0)) )+ ((2*u_1+2*u_0+2*u_3-6*t) / ((u_2 - u_1) * (u_3 - u_1) * (u_3 - u_0)))
-        +((-6*t+4*u_1+2*u_4) / ((u_2 - u_1) * (u_4 - u_1) * (u_3 - u_1)))
+        value = ((2*u_2-6*t+4*u_0) / ((u_2 - u_1) * (u_3 - u_0) * (u_2 - u_0)) )+ ((2*u_1+2*u_0+2*u_3-6*t) / ((u_2 - u_1) * (u_3 - u_1) * (u_3 - u_0))) +((-6*t+4*u_1+2*u_4) / ((u_2 - u_1) * (u_4 - u_1) * (u_3 - u_1)))
         count+=1
-        print('con2!value={}'.format(value))
+        print('con2!input ={} range=[{},{}] value={}'.format(t,u_1,u_2,value))
 
     elif u_0 <= t and u_1 >= t and (t != u_0 or t != u_1):
         value = (6*(t - u_0) ) / ((u_1 - u_0) * (u_2 - u_0) * (u_3 - u_0))
         count+=1
-        print('con1!value={}'.format(value))
+        print('con1!input ={} range=[{},{}] value={}'.format(t,u_0,u_1,value))
 
     if math.isnan(value) or math.isinf(value):
         value = 0
-    print('final!value={}'.format(value))
+    print('final!input ={} value={}'.format(t,value))
 
     return value
 def param(data,type='chord'):
@@ -96,6 +94,7 @@ def param(data,type='chord'):
 
     if type=='chord':
         '''Chord Length Parameterization'''
+        print('Chord Length Parameterization')
         while count<=n:
             vec1=np.array(data[count])
             vec2=np.array(data[count-1])
@@ -107,7 +106,7 @@ def param(data,type='chord'):
 
         dist_sum=sum(dist_list)
         count=0
-        print(dist_list)
+        # print(dist_list)
         while count<n+7:
             if count<4:
                 u_list.append(0)
@@ -127,6 +126,7 @@ def param(data,type='chord'):
                 t_list.append(accu_dist_list[count-1]/dist_sum)
             count+=1
     else:
+        print('Uniform Parameterization')
         count=0
         while count<n+1:
             if count<1:
@@ -154,7 +154,7 @@ def param(data,type='chord'):
 if __name__ == '__main__':
     degree=3
     data = []
-    with open("example2.txt", "rt") as file:
+    with open("example1.txt", "rt") as file:
         for line in file:
             data.append(list(map(int,line.strip().split(" "))))
 
@@ -180,11 +180,11 @@ if __name__ == '__main__':
     control_points_x_list[abs(control_points_x_list)<((np.e)**(-10))]=0.0
     control_points_y_list[abs(control_points_y_list)<((np.e)**(-10))]=0.0
 
-    print(data)
+    # print(data)
 
     for x, y in zip(control_points_x_list, control_points_y_list):
         print('['+str(round(x,2)) + " " + str(round(y,2)) + ']')
-    with open("example2_output.txt", "wt") as output:
+    with open("example1_output_chord.txt", "wt") as output:
         output.write(str(degree)+'\n')
         output.write(str(len(control_points_x_list))+'\n')
         output.write('\n')
