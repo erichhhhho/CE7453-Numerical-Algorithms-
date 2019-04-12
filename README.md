@@ -10,3 +10,6 @@ pip install -r requirement.txt
 source activate myenv
 ```
 
+### GUI Lauch
+cd CE7454_CE7453-Numerical-Algorithms-
+run GUI.exe
